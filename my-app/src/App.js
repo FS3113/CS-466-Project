@@ -4,7 +4,7 @@ import './App.css';
 import {Button} from "@material-ui/core";
 
 function App() {
-  const [tmp, setTmp] = useState('3113');
+  const [tmp, setTmp] = useState('');
   function handleChange(event){ setTmp(event.target.value); console.log(tmp)}
 
   async function submit() {
