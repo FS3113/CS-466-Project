@@ -50,11 +50,23 @@
   width: 50%;
 }
 
-.input {
+.inputContainer {
+  display: inline-block;
+  /* text-align: right; */
+}
+
+.textInput {
   border-radius: 0;
   border: 1px solid #2979FF;
   padding: 15px 20px;
   width: 80%;
+}
+
+.numberInput {
+  border-radius: 0;
+  border: 1px solid #2979FF;
+  padding: 15px 20px;
+  width: 10%;
 }
 
 .heading {
@@ -74,6 +86,14 @@
     display: inline-block;
     border: none;
     width: 100%;
+}
+
+
+label {
+  color: #2979FF;
+  font-weight: bold;
+  width: 150px;
+  margin: 10px;
 }
 
 .mt-20 {

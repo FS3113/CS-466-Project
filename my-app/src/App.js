@@ -24,12 +24,17 @@ function App() {
     <div className="homeOuterContainer">
       <div className="homeInnerContainer"> 
       <h1 className="heading">Visulization of Hirschberg Algorithm</h1>
-          <div>
-              <input placeholder="Sequence 1" className="input" type="text" onChange={(event) => setSeq1(event.target.value)} /> 
-              <input placeholder="Sequence 2" className="input mt-20" type="text" onChange={(event) => setSeq2(event.target.value)} />
-              <input placeholder="Match" className="input mt-20" type="text" onChange={(event) => setMatch(event.target.value)} />
-              <input placeholder="Misatch" className="input mt-20" type="text" onChange={(event) => setMismatch(event.target.value)} />
-              <input placeholder="Gap" className="input mt-20" type="text" onChange={(event) => setGap(event.target.value)} />
+          <div className="inputContainer">
+              <label>Sequence 1</label> 
+              <input placeholder="Sequence 1" className="textInput" type="text" onChange={(event) => setSeq1(event.target.value)} /> 
+              <label>Sequence 2</label> 
+              <input placeholder="Sequence 2" className="textInput mt-20" type="text" onChange={(event) => setSeq2(event.target.value)} />
+              <label>Match</label> 
+              <input placeholder="Match" className="numberInput mt-20" type="number" value="1" onChange={(event) => setMatch(event.target.value)} />
+              <label>Misatch</label> 
+              <input placeholder="Misatch" className="numberInput mt-20" type="number" value="-1" onChange={(event) => setMismatch(event.target.value)} />
+              <label>Gap</label> 
+              <input placeholder="Gap" className="numberInput mt-20" type="number" value="-1" onChange={(event) => setGap(event.target.value)} />
           </div>
           <button className="button mt-20" type="submit" onClick={submit}>Submit</button>     
       </div>
