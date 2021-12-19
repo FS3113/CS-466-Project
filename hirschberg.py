@@ -155,6 +155,10 @@ def draw(ref, n, flag=False):
         ax.axes.yaxis.set_visible(False)
 
     # plt.show()
+    if flag:
+        plt.title('Final Result')
+    else:
+        plt.title('Iteration {}'.format(n))
     plt.savefig('my-app/src/assets/{}.png'.format(n))
 
 
