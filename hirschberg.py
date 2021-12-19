@@ -14,6 +14,8 @@ mismatch = 0
 gap = 0
 
 def get_alignment():
+    if len(s1) <= 1 or len(s2) <= 1:
+        return
     res = [None] * (len(s2) + 1)
     res[0] = 0
     res[-1] = len(s1)
@@ -33,7 +35,37 @@ def get_alignment():
             n += 1
             draw(res, n)
 
-    # Hirschberg(0, 0, len(s1), len(s2))
+    z = np.ones((len(s1) + 1, len(s2) + 1))
+    t1, t2 = '-' + s1, '-' + s2
+    for i in range(len(res) - 1):
+        if res[i] == res[i + 1]:
+            z[res[i], i] = 0
+            z[res[i + 1], i + 1] = 0
+            continue
+        r = final_round(t1[res[i]: res[i + 1] + 1], t2[i: i + 2])
+        z[res[i]: res[i + 1] + 1, i: i + 2] = r
+    draw(z, n + 1, True)
+
+def final_round(a, b):
+    m = np.zeros((len(a), 2))
+    for i in range(1, len(m)):
+        m[i, 0] = m[i - 1, 0] + gap
+    m[0, 1] = gap
+    for i in range(1, len(m)):
+        m[i, 1] = max(m[i, 0] + gap, m[i - 1, 1] + gap, m[i - 1, 0] + (match if a[i] == b[1] else mismatch))
+    r = np.ones((len(a), 2))
+    i, j = len(r) - 1, 1
+    while i != 0 or j != 0:
+        r[i, j] = 0
+        if i * j > 0 and m[i - 1, j - 1] + (match if a[i] == b[j] else mismatch) == m[i, j]:
+            i -= 1
+            j -= 1
+        elif i > 0 and m[i - 1, j] + gap == m[i, j]:
+            i -= 1
+        else:
+            j -= 1
+    r[0, 0] = 0
+    return r
 
 
 def Hirschberg(i, j, i1, j1):
@@ -81,21 +113,24 @@ def Hirschberg(i, j, i1, j1):
     return (mid, i_star), (i, j, i_star, mid), (i_star, mid, i1, j1)
 
 
-def draw(ref, n):
-    z = np.ones((len(s1) + 1, len(s2) + 1))
-    l = []
-    for i in range(len(ref)):
-        if ref[i] is not None:
-            l.append((ref[i], i))
-    for i in range(len(l) - 1):
-        if l[i + 1][0] - l[i][0] <= 1 and l[i + 1][1] - l[i][1] <= 1:
-            continue
-        for a in range(l[i][0], l[i + 1][0] + 1):
-            for b in range(l[i][1], l[i + 1][1] + 1):
-                z[a, b] = 0.5
-    for i in range(len(ref)):
-        if ref[i] is not None:
-            z[ref[i], i] = 0
+def draw(ref, n, flag=False):
+    if flag:
+        z = ref
+    else:
+        z = np.ones((len(s1) + 1, len(s2) + 1))
+        l = []
+        for i in range(len(ref)):
+            if ref[i] is not None:
+                l.append((ref[i], i))
+        for i in range(len(l) - 1):
+            if l[i + 1][0] - l[i][0] <= 1 and l[i + 1][1] - l[i][1] <= 1:
+                continue
+            for a in range(l[i][0], l[i + 1][0] + 1):
+                for b in range(l[i][1], l[i + 1][1] + 1):
+                    z[a, b] = 0.5
+        for i in range(len(ref)):
+            if ref[i] is not None:
+                z[ref[i], i] = 0
 
     z = z[::-1]
     x = np.arange(-0.5, z.shape[1], 1)
